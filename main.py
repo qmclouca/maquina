@@ -2,12 +2,16 @@ import pandas as pd #importa a biblioteca pandas endereço (pandas.pydata.org)
 import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https://matplotlib.org/)
 import numpy as np
 
+
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de métricas para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
 from sklearn.metrics import confusion_matrix # importa a biblioteca de matriz de confusão
 from sklearn.metrics import recall_score # importa a biblioteca para sensibilidade e especifidade
 from sklearn.metrics import precision_recall_fscore_support #importa a a biblioteca para avaliar a precisão do modelo 
 from sklearn.model_selection import train_test_split #importa a biblioteca para treino do modelo e teste do Modelo 
+from sklearn.model_selection import KFold #importa a bliblioteca para fazer a validação cruzada dos conjuntos de treino
+
+
 
 df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe. nrows delimita o número de linhas a ler, útil para grandes conjuntos de dados
 print(df.head()) #imprime no console as colunas do dataframe
@@ -122,3 +126,27 @@ print("Exatidão: {0:.5f}".format(accuracy_score(y_test,y_test)))
 print("Precisão: {0:.5f}".format(precision_score(y_test,y_pred)))
 print("Desvio: {0:.5f}".format(recall_score(y_test,y_test)))
 print("Nota de qualidade do modelo f1: {0:.5f}".format(f1_score(y_test,y_pred)))
+#fazendo o mesmo com validação cruzada entre os conjuntos de treino para as seis primeiras linhas
+
+X = df[['Age', 'Fare']].values[:6]
+y = df['Survived'].values[:6]
+kf = KFold(n_splits=3, shuffle=True)
+splits = list(kf.split(X))
+first_split = splits[0]
+train_indices,test_indices = first_split
+print("training set indices:", train_indices)
+print("test set indices:", test_indices)
+print("Precione uma tecla para continuar...")
+input()
+X_train = X[train_indices]
+X_test = X[test_indices]
+y_train = y[train_indices]
+y_test = y[test_indices]
+print("X_train")
+print(X_train)
+print("y_train", y_train)
+print("X_test")
+print(X_test)
+print("y_test", y_test)
+print("Precione uma tecla para continuar...")
+input()
