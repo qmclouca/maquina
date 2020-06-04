@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt #importa a biblioteca de gráficos do python
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de metrica para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
+from sklearn.metrics import confusion_matrix
 
 df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe
 print(df.head()) #imprime no console as colunas do dataframe
@@ -74,3 +75,9 @@ print("Essa é a exatidão do modelo: ",accuracy_score(y, y_pred))
 print("Essa é a precisão do modelo: ", precision_score(y,y_pred))
 print("Esse é o desvio do modelo: ", recall_score(y,y_pred))
 print("Essa a nota F1 do modelo: ", f1_score(y,y_pred))
+#imprimir a matriz de confusão do ModuleNotFoundError
+print("Essa é a matriz de confusão do modelo: ", confusion_matrix(y,y_pred))
+# primeira linha Actual negative
+# segunda linha Actual positive
+# primeira coluna predicted negative
+# segunda coluna predicted positive
