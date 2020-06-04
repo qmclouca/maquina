@@ -1,7 +1,7 @@
 import pandas as pd #import pandas library
 import matplotlib.pyplot as plt #importa a biblioteca de gráficos do python
-import numpy as np
 
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de metrica para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
 
 df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe
@@ -64,9 +64,13 @@ print("compare com os dados reais: ")
 print(y[:100])
 print("Nem todas as previsões estão corretas, mas a quantidade de acertos é alta")
 
-
-#
-#y_pred = model.predict(X)
-#print((y == y_pred).sum())
-#print((y == y_pred).sum() / y.shape[0])
-#print(model.score(X, y))
+#Avaliação da qualidade do modelo
+y_pred = model.predict(X)
+print((y == y_pred).sum()) 
+print((y == y_pred).sum() / y.shape[0])
+print("O modelo apresenta: ", model.score(X, y)*100,"% de acertos!") 
+#Métricas do Modelo
+print("Essa é a exatidão do modelo: ",accuracy_score(y, y_pred))
+print("Essa é a precisão do modelo: ", precision_score(y,y_pred))
+print("Esse é o desvio do modelo: ", recall_score(y,y_pred))
+print("Essa a nota F1 do modelo: ", f1_score(y,y_pred))
