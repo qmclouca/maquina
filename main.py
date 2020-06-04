@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt #importa a biblioteca de gráficos do python
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de metrica para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix # importa a biblioteca de matriz de confusão
+from sklearn.model_selection import train_test_split 
 
 df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe
 print(df.head()) #imprime no console as colunas do dataframe
@@ -81,3 +82,10 @@ print("Essa é a matriz de confusão do modelo: ", confusion_matrix(y,y_pred))
 # segunda linha Actual positive
 # primeira coluna predicted negative
 # segunda coluna predicted positive
+
+#Fazendo o treinamento do modelo, criando o train test para X e y
+X_train,X_test,y_train,y_test =train_test_split(X,y) 
+#vendo a forma dos atributos para decobrir seus tamanhos
+print("todos os dados: ", X.shape, y.shape)
+print("conjunto de treino: ", X_train.shape, y_train.shape)
+print("conjunto de teste: ", X_test.shape, y_test.shape)
