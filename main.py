@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de métricas para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
 from sklearn.metrics import confusion_matrix # importa a biblioteca de matriz de confusão
+from sklearn.metrics import recall_score # importa a biblioteca para sensibilidade e especifidade
+from sklearn.metrics import precision_recall_fscore_support #importa a a biblioteca para avaliar a precisão do modelo 
 from sklearn.model_selection import train_test_split #importa a biblioteca para treino do modelo e teste do Modelo 
 
-df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv',nrows=300) #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe. nrows delimita o número de linhas a ler, útil para grandes conjuntos de dados
+df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe. nrows delimita o número de linhas a ler, útil para grandes conjuntos de dados
 print(df.head()) #imprime no console as colunas do dataframe
 print(df.describe()) #Retorna uma tabela de estatísticas sobre as colunas usado para entender os conjuntos de dados Count: Este é o numero de linhas que possuem algum valor. Neste caso, todos os passageiros possuem um valor em cada coluna, então o valor é 887 (o total de número de passageiros). Mean: Recupera a média padrão. Std: é uma abreviação para desvio padrão. É uma medida da dispersão dos dados. Min: O menor valor.25%: O vigésimo quinto porcentil. 50%: O quiquagésimo porcentil, também chamado de mediana. 75%: O septuagésimo quinto porcentil. Max: O maior valor.
 col =df['Fare'] #Seleciona uma unica coluna para ser impressa no console
@@ -66,10 +68,10 @@ print((y == y_pred).sum())
 print((y == y_pred).sum() / y.shape[0])
 print("O modelo apresenta: ", model.score(X, y)*100,"% de acertos!") 
 #Métricas do Modelo
-print("Essa é a exatidão do modelo: ",accuracy_score(y, y_pred))
-print("Essa é a precisão do modelo: ", precision_score(y,y_pred))
-print("Esse é o desvio do modelo: ", recall_score(y,y_pred))
-print("Essa a nota F1 do modelo: ", f1_score(y,y_pred))
+print("Essa é a exatidão do modelo: ",accuracy_score(y, y_pred)*100,"%")
+print("Essa é a precisão do modelo: ", precision_score(y,y_pred)*100,"%")
+print("Esse é o desvio do modelo: ", recall_score(y,y_pred)*100,"%")
+print("Essa a nota F1 do modelo: ", f1_score(y,y_pred)*100,"%")
 #imprimir a matriz de confusão do ModuleNotFoundError
 print("Essa é a matriz de confusão do modelo: ", confusion_matrix(y,y_pred))
 # primeira linha Actual negative, segunda linha Actual positive, primeira coluna predicted negative, segunda coluna predicted positive, 
@@ -81,9 +83,20 @@ print("conjunto de treino: ", X_train.shape, y_train.shape)
 print("conjunto de teste: ", X_test.shape, y_test.shape)
 model = LogisticRegression() #reiniciando a regressão linear
 model.fit(X_train,y_train)
-print("Avaliação do modelo de teste: ", model.score(X_test,y_test))
+print("Avaliação do modelo de teste: ", model.score(X_test,y_test)*100,"%")
 y_pred = model.predict(X_test)
-print("A exatidão do modelo é:", accuracy_score(y_test,y_pred))
-print("A precisão do modelo é:", precision_score(y_test,y_pred))
-print("Desvio do modelo: ", recall_score(y_test,y_pred))
-print("Nota de qualidade do modelo f1:", f1_score(y_test,y_pred))
+print("A exatidão do modelo é:", accuracy_score(y_test,y_pred)*100,"%")
+print("A precisão do modelo é:", precision_score(y_test,y_pred)*100,"%")
+print("Desvio do modelo: ", recall_score(y_test,y_pred)*100,"%")
+print("Nota de qualidade do modelo f1:", f1_score(y_test,y_pred)*100,"%")
+#X_train,X_test,y_train,y_test =train_test_split(X,y,random_state = 27) #Aplicando um fator para que o conjunto de dados gerados seja sempre homogêneo
+#print('X_train',X_train)
+#print('X_test',X_test)
+#Trabalhando com sensibilidade e especificidade
+sensitivity_score = recall_score
+print("Nota de sensibilidade do modelo: ", sensitivity_score(y_test, y_pred)*100,"%")
+#print("A precisão do modelo é de:", precision_recall_fscore_support(y_test,y_pred))
+def specificity_score(y_true, y_pred):
+    p, r, f, s = precision_recall_fscore_support(y_true, y_pred)
+    return r[0]
+print("A nota de especificidade do modelo é: ",specificity_score(y_test, y_pred)*100,"%") 
