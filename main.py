@@ -1,6 +1,6 @@
 import pandas as pd #importa a biblioteca pandas endereço (pandas.pydata.org)
 import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https://matplotlib.org/)
-import numpy as np
+import numpy as np #importa a biblioteca matemática Numpy (numpy.org)
 
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de métricas para avalição da qualidade dos modelos
