@@ -1,5 +1,6 @@
 import pandas as pd #importa a biblioteca pandas endereço (pandas.pydata.org)
 import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https://matplotlib.org/)
+import numpy as np
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de métricas para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
@@ -106,9 +107,18 @@ print("probabilidade predita: ", model.predict_proba(X_test))
 y_pred = model.predict_proba(X_test)[:,1] > 0.75
 print("Precisão:", precision_score(y_test,y_pred)*100, "%")
 print("Desvio: ", recall_score(y_test,y_pred)*100, "%")
-#Trabalhando com multiplos subconjuntos de treino e teste. O mesmo conjunto de dados é sempre subdividido em pontos diferentes
+#Trabalhando com multiplos subconjuntos de treino e teste. O mesmo conjunto de dados é sempre subdividido em pontos diferentes. Primeiro vou reiniciar as variáveis
+X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']].values
+y = df['Survived'].values
+
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+# building the model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+print("Treinando com diversos conjutos de treino: ")
 y_pred = model.predict(X_test)
 print("Exatidão: {0:.5f}".format(accuracy_score(y_test,y_test)))
 print("Precisão: {0:.5f}".format(precision_score(y_test,y_pred)))
-print("Desvio: {0:,5f}".format(recall_score(y_test,y_test)))
+print("Desvio: {0:.5f}".format(recall_score(y_test,y_test)))
 print("Nota de qualidade do modelo f1: {0:.5f}".format(f1_score(y_test,y_pred)))
