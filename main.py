@@ -36,18 +36,35 @@ print("fim menor que 18")
 print(arr[arr[:,2] > 18]) # também pode ser escrito em uma linha, agora retornará o que for maior que 18
 print("fim maior que 18")
 print("Soma das idades menores que 18: ", arr[arr[:,2] < 18].sum())
-plt.scatter(df['Age'],df['Fare'])
-plt.xlabel('Age')
-plt.ylabel('Fare')
-
-#X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']].values
-#y = df['Survived'].values
-
+plt.scatter(df['Age'],df['Fare']) #plota um gráfico de dispersão com os dados de idade versus tarifa
+plt.xlabel('Age') # coloca uma legenda no eixo x
+plt.ylabel('Fare') # coloca uma legenda no eixo y
+plt.scatter(df['Age'],df['Fare'],c=df['Pclass']) #plota o mesmo gráfico anterior mas marcando com cores diferentes as diferentes classes
+plt.plot([0,80],[85,5]) #desenha uma linha no gráfico entre os dois pontos descritos
+X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']].values
+#X = df[['Fare','Age']].values
+y = df['Survived'].values
+print("imprimindo valores de x: ")
+print(X)
+print("imprimindo valores de y: ")
+print(y)
 
 #plt.scatter(df['Age'],df['Fare'],c=df['Pclass'])
 
-#model = LogisticRegression()
-#model.fit(X, y)
+model = LogisticRegression()
+model.fit(X, y)
+print("imprimindo os coeficientes da reta e seu intercepto: ")
+print(model.coef_,model.intercept_)
+print("imprimindo a previsão segundo os dados de um passageiro: ") #Pclass 3, male, 22 years old, 1 sibling/spouse aboard, 0 parents/child aboard, paid $7.25
+print(model.predict([[3,True,22.0,1,0,7.25]]))
+print("[0] significa que o passageiro não sobreviveu, [1] que sobreviveu. ")
+print("fazendo a previsão para as 100 primeiras linhas de dados: ")
+print(model.predict(X[:100]))
+print("compare com os dados reais: ")
+print(y[:100])
+print("Nem todas as previsões estão corretas, mas a quantidade de acertos é alta")
+
+
 #
 #y_pred = model.predict(X)
 #print((y == y_pred).sum())
