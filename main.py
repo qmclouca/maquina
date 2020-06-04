@@ -44,6 +44,10 @@ plt.xlabel('Age') # coloca uma legenda no eixo x
 plt.ylabel('Fare') # coloca uma legenda no eixo y
 plt.scatter(df['Age'],df['Fare'],c=df['Pclass']) #plota o mesmo gráfico anterior mas marcando com cores diferentes as diferentes classes
 plt.plot([0,80],[85,5]) #desenha uma linha no gráfico entre os dois pontos descritos
+plt.show(block=False)
+print("precione qualquer tecla para continuar")
+input()
+plt.close()
 X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']].values
 #X = df[['Fare','Age']].values
 y = df['Survived'].values
@@ -112,10 +116,10 @@ y_pred = model.predict_proba(X_test)[:,1] > 0.75
 print("Precisão:", precision_score(y_test,y_pred)*100, "%")
 print("Desvio: ", recall_score(y_test,y_pred)*100, "%")
 #Trabalhando com multiplos subconjuntos de treino e teste. O mesmo conjunto de dados é sempre subdividido em pontos diferentes. Primeiro vou reiniciar as variáveis
+
 X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']].values
 y = df['Survived'].values
 
-X_train, X_test, y_train, y_test = train_test_split(X, y)
 
 # building the model
 model = LogisticRegression()
@@ -127,9 +131,9 @@ print("Precisão: {0:.5f}".format(precision_score(y_test,y_pred)))
 print("Desvio: {0:.5f}".format(recall_score(y_test,y_test)))
 print("Nota de qualidade do modelo f1: {0:.5f}".format(f1_score(y_test,y_pred)))
 #fazendo o mesmo com validação cruzada entre os conjuntos de treino para as seis primeiras linhas
-
-X = df[['Age', 'Fare']].values[:6]
-y = df['Survived'].values[:6]
+X_train,X_test,y_train,y_test =train_test_split(X,y, random_state = 27) 
+X = df[['Age', 'Fare']].values[:150]
+y = df['Survived'].values[:150]
 kf = KFold(n_splits=3, shuffle=True)
 splits = list(kf.split(X))
 first_split = splits[0]
@@ -150,3 +154,15 @@ print(X_test)
 print("y_test", y_test)
 print("Precione uma tecla para continuar...")
 input()
+print("o modelo agora será treinado com cinco subconjuntos: ")
+scores = []
+kf = KFold(n_splits=5, shuffle=True)
+for train_index, test_index in kf.split(X):
+    X_train, X_test = X[train_index], X[test_index]
+    y_train, y_test = y[train_index], y[test_index]
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
+    scores.append(model.score(X_test, y_test))
+print("Nota média do modelo:", np.mean(scores))
+final_model = LogisticRegression()
+final_model.fit(X,y)
