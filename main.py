@@ -1,30 +1,24 @@
-import pandas as pd #import pandas library
-import matplotlib.pyplot as plt #importa a biblioteca de gráficos do python
+import pandas as pd #importa a biblioteca pandas endereço (pandas.pydata.org)
+import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https://matplotlib.org/)
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de metrica para avalição da qualidade dos modelos
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score #importa as bibliotecas de métricas para avalição da qualidade dos modelos
 from sklearn.linear_model import LogisticRegression #importa a biblioteca para análise linear da biblioteca sklearn
 from sklearn.metrics import confusion_matrix # importa a biblioteca de matriz de confusão
-from sklearn.model_selection import train_test_split 
+from sklearn.model_selection import train_test_split #importa a biblioteca para treino do modelo e teste do Modelo 
 
 df = pd.read_csv('https://sololearn.com/uploads/files/titanic.csv') #read_csv converte o formato csv do arquivo de dados no formato Pandas Dataframe
 print(df.head()) #imprime no console as colunas do dataframe
-print(df.describe()) #Retorna uma tabela de estatísticas sobre as colunas usado para entender os conjuntos de dados
-                     #Count: This is the number of rows that have a value. In our case, every passenger has a value for each of the columns, so the value is 887 (the total number of passengers).
-                     #Mean: Recall that the mean is the standard average.
-                     #Std: This is short for standard deviation. This is a measure of how dispersed the data is.
-                     #Min: The smallest value
-                     #25%: The 25th percentile
-                     #50%: The 50th percentile, also known as the median.
-                     #75%: The 75th percentile
-                     #Max: The largest value
+print(df.describe()) #Retorna uma tabela de estatísticas sobre as colunas usado para entender os conjuntos de dados Count: Este é o numero de linhas que possuem algum valor. Neste caso, todos os passageiros possuem um valor em cada coluna, então o valor é 887 (o total de número de passageiros). Mean: Recupera a média padrão. Std: é uma abreviação para desvio padrão. É uma medida da dispersão dos dados. Min: O menor valor.25%: O vigésimo quinto porcentil. 50%: O quiquagésimo porcentil, também chamado de mediana. 75%: O septuagésimo quinto porcentil. Max: O maior valor.
 col =df['Fare'] #Seleciona uma unica coluna para ser impressa no console
 print(col)#imprime a coluna no console constitui uma Panda Series
 small_df = df[['Age','Sex','Survived']] #Faz uma seleção de dados dentro do DataFrame e une como um conjunto de dados menor
 print(small_df.head()) #Imprime o conjunto de dados menor
-df['male'] = df['Sex'] == 'male' #Cria uma nova coluna no DataFrame com o nome delarado faz uma comparação lógica e retorna o valor da comparação para a nova coluna
-#Numpy is a Python package for manipulating lists and tables of numerical data. We can use it to do a lot of statistical calculations. We call the list or table of data a numpy array. We often will take the data from our pandas DataFrame and put it in numpy arrays. Pandas DataFrames are great because we have the column names and other text data that makes it human readable. A DataFrame, while easy for a human to read, is not the ideal format for doing calculations. The numpy arrays are generally less human readable, but are in a format that enables the necessary computation.
+df['male'] = df['Sex'] == 'male' #Cria uma nova coluna no DataFrame com o nome declarado, faz uma comparação lógica e retorna o valor da comparação para a nova coluna. Numpy é um pacote do Python para a manipulação de listas e tabelas numéricas. Podemos usar ela para realizar muitos cálculos estatísticos. Nós chamamos de lista ou tabela de dados uma matriz numpy. Geralmente iremos tomar um dado de um pandas DataFrame e colocar em uma matriz do tipo numpy. Pandas DataFrames são ótimos porque possuem os nomes das colunas e outros textos que fazem delas legíveis aos humanos. Apesar disso não são a forma ideal para realização de cálculos. As matrizes numpy são menos fáceis de ler para humanos, porém possuem o formato necessário para a computação dos dados.
+print("Agora vamos converter uma das colunas do DataFrame em uma matriz Numpy: ")
 print(df['Fare'].values) #Usa a biblioteca NumPy para converter a coluna Fare em um variável do tipo vetor (array)
+print("Também podemos converter mais colunas ao mesmo tempo de Dataframe para Numpy: ")
 print(df[['Pclass','Fare','Age']].values)#usa a mesma idéia da linha acima mas produz uma matriz tridimensional (array)
+print("Além disso podemos gravar essa nova matriz em um arranjo de dados para ser manipulado: ")
 arr = df[['Pclass','Fare','Age']].values #usa também a mesma idéia mas grava a matriz gerada na variável arr
 print(arr.shape) #Imprime no console o número de linhas e colunas da matriz na variável arr
 #Selecionar dados específicos usando NumPy
