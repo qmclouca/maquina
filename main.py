@@ -76,7 +76,7 @@ print("Essa a nota F1 do modelo: ", f1_score(y,y_pred)*100,"%")
 print("Essa é a matriz de confusão do modelo: ", confusion_matrix(y,y_pred))
 # primeira linha Actual negative, segunda linha Actual positive, primeira coluna predicted negative, segunda coluna predicted positive, 
 # Fazendo o treinamento do modelo, criando o train test para X e y
-X_train,X_test,y_train,y_test =train_test_split(X,y) 
+X_train,X_test,y_train,y_test =train_test_split(X,y, random_state = 27) 
 # Vendo a forma dos atributos para descobrir seus tamanhos
 print("todos os dados: ", X.shape, y.shape)
 print("conjunto de treino: ", X_train.shape, y_train.shape)
@@ -100,3 +100,15 @@ def specificity_score(y_true, y_pred):
     p, r, f, s = precision_recall_fscore_support(y_true, y_pred)
     return r[0]
 print("A nota de especificidade do modelo é: ",specificity_score(y_test, y_pred)*100,"%") 
+#Trabalhando com metas através de curvas de desvio
+model.fit(X_train,y_train)
+print("probabilidade predita: ", model.predict_proba(X_test))
+y_pred = model.predict_proba(X_test)[:,1] > 0.75
+print("Precisão:", precision_score(y_test,y_pred)*100, "%")
+print("Desvio: ", recall_score(y_test,y_pred)*100, "%")
+#Trabalhando com multiplos subconjuntos de treino e teste. O mesmo conjunto de dados é sempre subdividido em pontos diferentes
+y_pred = model.predict(X_test)
+print("Exatidão: {0:.5f}".format(accuracy_score(y_test,y_test)))
+print("Precisão: {0:.5f}".format(precision_score(y_test,y_pred)))
+print("Desvio: {0:,5f}".format(recall_score(y_test,y_test)))
+print("Nota de qualidade do modelo f1: {0:.5f}".format(f1_score(y_test,y_pred)))
