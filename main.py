@@ -1,3 +1,4 @@
+
 import pandas as pd #importa a biblioteca pandas endereço (pandas.pydata.org)
 import matplotlib.pyplot as plt #importa a biblioteca de gráficos pyplot (https://matplotlib.org/)
 import numpy as np #importa a biblioteca matemática Numpy (numpy.org)
@@ -111,7 +112,8 @@ def specificity_score(y_true, y_pred):
 print("A nota de especificidade do modelo é: ",specificity_score(y_test, y_pred)*100,"%") 
 #Trabalhando com metas através de curvas de desvio
 model.fit(X_train,y_train)
-print("probabilidade predita: ", model.predict_proba(X_test))
+print("probabilidade predita: [MORTE, VIDA]")
+print(model.predict_proba(X_test))
 y_pred = model.predict_proba(X_test)[:,1] > 0.75
 print("Precisão:", precision_score(y_test,y_pred)*100, "%")
 print("Desvio: ", recall_score(y_test,y_pred)*100, "%")
@@ -121,7 +123,7 @@ X = df[['Pclass', 'male', 'Age', 'Siblings/Spouses', 'Parents/Children', 'Fare']
 y = df['Survived'].values
 
 
-# building the model
+# construindo o modelo / building model
 model = LogisticRegression()
 model.fit(X_train, y_train)
 print("Treinando com diversos conjutos de treino: ")
@@ -132,8 +134,8 @@ print("Desvio: {0:.5f}".format(recall_score(y_test,y_test)))
 print("Nota de qualidade do modelo f1: {0:.5f}".format(f1_score(y_test,y_pred)))
 #fazendo o mesmo com validação cruzada entre os conjuntos de treino para as seis primeiras linhas
 X_train,X_test,y_train,y_test =train_test_split(X,y, random_state = 27) 
-X = df[['Age', 'Fare']].values[:150]
-y = df['Survived'].values[:150]
+X = df[['Age', 'Fare']].values[:50]
+y = df['Survived'].values[:50]
 kf = KFold(n_splits=3, shuffle=True)
 splits = list(kf.split(X))
 first_split = splits[0]

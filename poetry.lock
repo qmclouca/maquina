@@ -141,8 +141,8 @@ python-versions = ">=3.5"
 version = "2.1.0"
 
 [metadata]
-content-hash = "ed87eaf10caa3e07b1b9f25113964d389e667fa0ce2230e5502e48c7f3e410c6"
-python-versions = "^3.7"
+content-hash = "f802a8432f27d6b27c44e18daffadb89e49b264067ded1687a18b0997037ea8e"
+python-versions = "^3.8"
 
 [metadata.hashes]
 cycler = ["1d8a5ae1ff6c5cf9b93e8811e581232ad8920aeec647c37316ceac982b08cb2d", "cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"]
